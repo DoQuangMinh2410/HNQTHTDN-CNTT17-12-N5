@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="asset_depreciation_form" model="ir.ui.view">
+            <field name="name">asset.depreciation.form</field>
+            <field name="model">asset.depreciation</field>
+            <field name="arch" type="xml">
+                <form string="Khấu hao Tài sản">
+                    <header>
+                        <button name="action_confirm" string="Xác nhận" type="object" class="oe_highlight" states="draft"/>
+                        <button name="action_post" string="Ghi sổ" type="object" class="oe_highlight" states="confirmed"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="asset_id"/>
+                                <field name="employee_id"/>
+                                <field name="date"/>
+                                <field name="month"/>
+                            </group>
+                            <group>
+                                <field name="original_value"/>
+                                <field name="depreciation_amount"/>
+                                <field name="remaining_value"/>
+                                <field name="depreciation_method"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="account_move_id" readonly="1"/>
+                            <field name="notes" placeholder="Ghi chú..."/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="asset_depreciation_tree" model="ir.ui.view">
+            <field name="name">asset.depreciation.tree</field>
+            <field name="model">asset.depreciation</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách Khấu hao" editable="bottom">
+                    <field name="date"/>
+                    <field name="asset_id"/>
+                    <field name="employee_id"/>
+                    <field name="depreciation_amount"/>
+                    <field name="remaining_value"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="asset_depreciation_search" model="ir.ui.view">
+            <field name="name">asset.depreciation.search</field>
+            <field name="model">asset.depreciation</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm Khấu hao">
+                    <field name="asset_id"/>
+                    <field name="employee_id"/>
+                    <field name="date"/>
+                    <filter name="drafts" string="Nháp" domain="[('state', '=', 'draft')]"/>
+                    <filter name="confirmed" string="Xác nhận" domain="[('state', '=', 'confirmed')]"/>
+                    <filter name="posted" string="Đã ghi sổ" domain="[('state', '=', 'posted')]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="asset_depreciation_action" model="ir.actions.act_window">
+            <field name="name">Khấu hao Tài sản</field>
+            <field name="res_model">asset.depreciation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="asset_depreciation_search"/>
+        </record>
+    </data>
+</odoo>

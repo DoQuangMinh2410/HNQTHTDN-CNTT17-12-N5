@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Depreciation Report View -->
+        <record id="report_template_depreciation" model="ir.ui.view">
+            <field name="name">asset.depreciation.report</field>
+            <field name="model">asset.depreciation</field>
+            <field name="arch" type="xml">
+                <tbody>
+                    <tr>
+                        <td><span t-field="o.date"/></td>
+                        <td><span t-field="o.asset_id.ten_tai_san"/></td>
+                        <td><span t-field="o.employee_id.ho_ten"/></td>
+                        <td><span t-field="o.depreciation_amount"/></td>
+                        <td><span t-field="o.remaining_value"/></td>
+                        <td><span t-field="o.state"/></td>
+                    </tr>
+                </tbody>
+            </field>
+        </record>
+    </data>
+</odoo>
