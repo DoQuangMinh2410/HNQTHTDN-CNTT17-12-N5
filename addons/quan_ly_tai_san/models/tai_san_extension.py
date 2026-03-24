@@ -17,23 +17,8 @@ class TaiSanExtension(models.Model):
     
     assignment_date = fields.Date('Ngày gán cho nhân viên')
     
-    # Liên kết với khấu hao
-    depreciation_ids = fields.One2many(
-        'asset.depreciation',
-        'asset_id',
-        string='Danh sách Khấu hao'
-    )
-    
-    depreciation_schedule_id = fields.Many2one(
-        'asset.depreciation.schedule',
-        string='Lịch khấu hao'
-    )
-    
-    account_move_ids = fields.One2many(
-        'account.move.custom',
-        'asset_id',
-        string='Bút toán kế toán'
-    )
+    # Không gắn chặt module kế toán trên module tài sản để tránh phụ thuộc vòng
+    # Kết nối khấu hao và bút toán sẽ được khai báo trong accounting_module.
     
     # Trạng thái sử dụng (thay cho trang_thai_thanh_ly)
     usage_status = fields.Selection([
@@ -44,42 +29,28 @@ class TaiSanExtension(models.Model):
     ], string='Trạng thái sử dụng', default='draft')
 
     def action_confirm(self):
-        """Xác nhận tài sản - tự động tạo lịch khấu hao"""
-        if self.usage_status != 'draft':
-            return
-        
-        self.usage_status = 'in_use'
-        
-        # Tự động tạo lịch khấu hao
-        if self.pp_khau_hao != 'none' and not self.depreciation_schedule_id:
-            DepreciationSchedule = self.env['asset.depreciation.schedule']
-            schedule = DepreciationSchedule.create({
-                'asset_id': self.id,
-                'original_value': self.gia_tri_ban_dau,
-                'depreciation_method': 'straight_line' if self.pp_khau_hao == 'straight-line' else 'degressive',
-                'useful_life_months': self.thoi_gian_toi_da * 12,
-                'annual_rate': self.ty_le_khau_hao,
-                'start_date': datetime.now().date(),
-            })
-            self.depreciation_schedule_id = schedule.id
-            
-            # Tạo khấu hao cho các tháng
-            schedule.action_generate_depreciation()
+        """Xác nhận tài sản."""
+        for record in self:
+            if record.usage_status != 'draft':
+                continue
+            record.usage_status = 'in_use'
+            # Phần khấu hao kế toán sẽ được thực hiện trong accounting_module nếu cài đặt.
+            return True
 
-    def action_assign_employee(self):
-        """Gán tài sản cho nhân viên"""
-        if not self.phan_bo_employee_id:
-            raise models.ValidationError("Vui lòng chọn nhân viên!")
+    # def action_assign_employee(self):
+    #     """Gán tài sản cho nhân viên"""
+    #     if not self.phan_bo_employee_id:
+    #         raise models.ValidationError("Vui lòng chọn nhân viên!")
         
-        self.assignment_date = datetime.now().date()
+    #     self.assignment_date = datetime.now().date()
         
-        # Tạo record gán tài sản
-        AssetAssignment = self.env['asset.assignment']
-        AssetAssignment.create({
-            'asset_id': self.id,
-            'employee_id': self.phan_bo_employee_id.id,
-            'assignment_date': self.assignment_date,
-        })
+    #     # Tạo record gán tài sản
+    #     AssetAssignment = self.env['asset.assignment']
+    #     AssetAssignment.create({
+    #         'asset_id': self.id,
+    #         'employee_id': self.phan_bo_employee_id.id,
+    #         'assignment_date': self.assignment_date,
+    #     })
 
     def action_depreciate(self):
         """Tạo khấu hao ngay lập tức"""
@@ -93,19 +64,19 @@ class TaiSanExtension(models.Model):
             # Tạo khấu hao theo phương thức cũ
             self.action_tinh_khau_hao()
 
-    @api.model
-    def schedule_monthly_depreciation(self):
-        """Scheduled Job - chạy hàng tháng để tạo khấu hao"""
-        assets = self.search([
-            ('usage_status', '=', 'in_use'),
-            ('pp_khau_hao', '!=', 'none'),
-            ('depreciation_schedule_id', '!=', False),
-        ])
+    # @api.model
+    # def schedule_monthly_depreciation(self):
+    #     """Scheduled Job - chạy hàng tháng để tạo khấu hao"""
+    #     assets = self.search([
+    #         ('usage_status', '=', 'in_use'),
+    #         ('pp_khau_hao', '!=', 'none'),
+    #         ('depreciation_schedule_id', '!=', False),
+    #     ])
         
-        for asset in assets:
-            # Kiểm tra xem khấu hao tháng này đã tạo chưa
-            current_month = datetime.now().strftime('%m/%Y')
-            existing = asset.depreciation_ids.filtered(lambda r: r.month == current_month)
+    #     for asset in assets:
+    #         # Kiểm tra xem khấu hao tháng này đã tạo chưa
+    #         current_month = datetime.now().strftime('%m/%Y')
+    #         existing = asset.depreciation_ids.filtered(lambda r: r.month == current_month)
             
-            if not existing and asset.depreciation_schedule_id:
-                asset.depreciation_schedule_id.action_generate_depreciation()
+    #         if not existing and asset.depreciation_schedule_id:
+    #             asset.depreciation_schedule_id.action_generate_depreciation()

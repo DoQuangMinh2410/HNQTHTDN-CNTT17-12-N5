@@ -117,8 +117,6 @@
                     <filter name="anomaly" string="Bất thường" domain="[('event_type', '=', 'anomaly_detected')]"/>
                     <filter name="expires_soon" string="Sắp hết hạn" domain="[('event_type', '=', 'asset_expires_soon')]"/>
                     <separator/>
-                    <filter name="today" string="Hôm nay" domain="[('create_date', '>=', (context_today() - timedelta(days=1)).strftime('%Y-%m-%d')), ('create_date', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
-                    <filter name="week" string="Tuần này" domain="[('create_date', '>=', (context_today() - timedelta(weeks=1)).strftime('%Y-%m-%d'))]"/>
                     <separator/>
                     <group expand="1" string="Nhóm theo">
                         <filter name="group_status" string="Trạng thái" context="{'group_by': 'status'}"/>
@@ -138,7 +136,5 @@
             <field name="context">{'search_default_sent': 1}</field>
         </record>
 
-        <!-- Menu Item -->
-        <menuitem id="notification_log_menu" name="Nhật ký Thông báo" parent="accounting_module_root" action="notification_log_action" sequence="6"/>
     </data>
 </odoo>

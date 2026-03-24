@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-	<data>
-		<menuitem id="menu_root" name="Quản lý tài sản" sequence="0" />
+	<menuitem id="menu_root" name="Quản lý tài sản" sequence="0" />
 
-        <!-- Dashboard -->
-        <menuitem id="menu_asset_dashboard" name="Dashboard" parent="menu_root" sequence="1"/>
+        <!-- Dashboard - Temporarily removed due to model issues -->
+        <!-- <menuitem id="menu_asset_dashboard" name="Dashboard" parent="menu_root" sequence="1"/>
         
         <menuitem id="menu_dashboard_overview" name="Tổng quan" 
                   action="dashboard_tong_quan_action" parent="menu_asset_dashboard" sequence="1"/>
         
         <menuitem id="menu_dashboard_borrowing" name="Danh sách mượn trả" 
-                  action="dashboard_muon_tra" parent="menu_asset_dashboard" sequence="2"/>
+                  action="dashboard_muon_tra" parent="menu_asset_dashboard" sequence="2"/> -->
 
         <!-- Tài sản -->
         <menuitem name="Tài sản" id="menu_tai_san" parent="menu_root" sequence="2" />
@@ -36,5 +35,4 @@
         <menuitem id="don_muon_tai_san_menu" name="Đơn mượn tài sản" parent="menu_muon_tra_tai_san" action="don_muon_tai_san_action" sequence="1" />
         <menuitem id="muon_tra_tai_san_menu" name="Quản lý mượn trả tài sản" parent="menu_muon_tra_tai_san" action="muon_tra_tai_san_action" sequence="2" />
         <!--  -->
-	</data>
 </odoo>

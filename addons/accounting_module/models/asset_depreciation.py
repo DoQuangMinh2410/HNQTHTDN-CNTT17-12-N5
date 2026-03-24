@@ -11,7 +11,7 @@ class AssetDepreciation(models.Model):
     _order = 'date desc'
 
     asset_id = fields.Many2one('tai_san', string='Tài sản', required=True, ondelete='cascade')
-    employee_id = fields.Many2one('nhan_vien', string='Nhân viên được giao', related='asset_id.phan_bo_employee_id', store=True, readonly=True)
+    employee_id = fields.Many2one('nhan_vien', string='Nhân viên được giao', related='asset_id.phan_bo_employee_id', store=True, readonly=False)
     date = fields.Date('Ngày khấu hao', required=True, default=fields.Date.today)
     month = fields.Char('Tháng', compute='_compute_month', store=True)
     

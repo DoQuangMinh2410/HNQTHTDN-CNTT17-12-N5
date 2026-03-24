@@ -41,7 +41,7 @@ class NotificationLog(models.Model):
 
     # Related Records
     asset_id = fields.Many2one(
-        'quan_ly_tai_san.asset',
+        'tai_san',
         string='Tài sản'
     )
     depreciation_schedule_id = fields.Many2one(

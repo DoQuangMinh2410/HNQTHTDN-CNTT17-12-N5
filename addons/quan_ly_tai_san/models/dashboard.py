@@ -3,7 +3,6 @@ from odoo import api, fields, models
 class AssetDashboard(models.Model):
     _name = 'asset.dashboard'
     _description = 'Dashboard for Asset Management'
-    _auto = False
 
     @api.model
     def name_get(self):

@@ -12,6 +12,7 @@
 
     'author': "Nguyễn Ngọc Đan Trường - 1504",
     'website': "http://www.yourcompany.com",
+    'license': 'AGPL-3',
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/15.0/odoo/addons/base/data/ir_module_category_data.xml
@@ -24,6 +25,7 @@
 
     # always loaded
     'data': [
+        'data/scheduled_jobs.xml',
         'security/ir.model.access.csv',
         'views/danh_muc_tai_san.xml',
         'views/kiem_ke_tai_san.xml',
@@ -34,8 +36,8 @@
         'views/phan_bo_tai_san.xml',
         'views/tai_san.xml',
         'views/thanh_ly_tai_san.xml',
-        'views/dashboard_overview.xml',
-        'views/dashboard_borrowing.xml',
+        # 'views/dashboard_overview.xml',  # Removed - model asset.dashboard not found
+        # 'views/dashboard_borrowing.xml',  # Removed - model asset.dashboard not found
         'views/menu.xml',
     ],
     # only loaded in demonstration mode

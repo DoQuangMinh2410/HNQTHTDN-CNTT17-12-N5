@@ -2,6 +2,7 @@
 from . import asset_depreciation
 from . import account_move
 from . import asset_depreciation_schedule
+from . import tai_san_accounting_extension
 from . import asset_ai_analysis
 from . import asset_gemini_config
 from . import notify_email_config

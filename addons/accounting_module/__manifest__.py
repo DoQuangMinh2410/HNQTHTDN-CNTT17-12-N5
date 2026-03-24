@@ -13,7 +13,8 @@
     'website': "http://www.yourcompany.com",
     'category': 'Accounting',
     'version': '1.0',
-    'depends': ['base', 'quan_ly_tai_san', 'nhan_su'],
+    'license': 'AGPL-3',
+    'depends': ['base', 'nhan_su', 'quan_ly_tai_san'],
     'external_dependencies': {
         'python': [
             'google-generativeai',
@@ -32,12 +33,15 @@
         'views/asset_gemini_config_view.xml',
         'views/notify_config_view.xml',
         'views/notification_log_view.xml',
-        'views/menu.xml',
         'report/depreciation_report.xml',
+        'views/menu.xml',
         'data/scheduled_jobs.xml',
     ],
     'demo': [
         'demo/demo_data.xml',
+    ],
+    'tests': [
+        'tests/test_asset_depreciation_schedule.py',
     ],
     'installable': True,
     'auto_install': False,

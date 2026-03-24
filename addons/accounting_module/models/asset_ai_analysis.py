@@ -343,3 +343,34 @@ Vui lòng truy cập hệ thống để xem chi tiết phân tích đầy đủ.
         </html>
         """
         return html
+
+    @api.model
+    def schedule_monthly_analysis(self):
+        """Scheduled Job - chạy hàng tháng để phân tích AI"""
+        try:
+            # Tạo record phân tích mới
+            analysis = self.create({
+                'analysis_date': fields.Date.today(),
+            })
+            
+            # Thực hiện phân tích
+            analysis.action_analyze()
+            
+            # Gửi báo cáo qua email
+            analysis.action_export_report()
+            
+            _logger.info(f'Monthly AI analysis completed for {analysis.analysis_date}')
+            
+        except Exception as e:
+            _logger.error(f'Error in monthly AI analysis: {str(e)}')
+            # Gửi thông báo lỗi
+            self.env['bus.bus']._sendone(
+                self.env.user.partner_id, 
+                'simple_notification', 
+                {
+                    'title': 'Lỗi phân tích AI',
+                    'message': f'Lỗi phân tích AI hàng tháng: {str(e)}',
+                    'sticky': False,  
+                    'type': 'danger'  
+                }
+            )

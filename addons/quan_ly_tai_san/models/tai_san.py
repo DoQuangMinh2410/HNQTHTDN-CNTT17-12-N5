@@ -96,6 +96,14 @@ class TaiSan(models.Model):
             elif record.gia_tri_hien_tai > record.gia_tri_ban_dau:
                 raise ValidationError("Giá trị hiện tại không thể lớn hơn giá trị ban đầu !")
     
+    def _get_notification_partner(self):
+        """Return a partner record suitable for bus notifications."""
+        if self.env.user and self.env.user.partner_id:
+            return self.env.user.partner_id
+        # Fallback to the first partner in database to avoid environment errors
+        partner = self.env['res.partner'].sudo().search([], limit=1)
+        return partner
+
     def action_tinh_khau_hao(self):
         for record in self:
             if record.gia_tri_hien_tai <= 0:
@@ -105,40 +113,81 @@ class TaiSan(models.Model):
 
             so_tien_khau_hao = 0
 
-            if record.pp_khau_hao == 'straight-line':  
+            if record.pp_khau_hao == 'straight-line':
                 if record.thoi_gian_toi_da <= 0:
                     raise ValidationError("Thời gian sử dụng tối đa phải lớn hơn 0 (năm) !")
-                so_tien_khau_hao = record.gia_tri_ban_dau / record.thoi_gian_toi_da  
+                so_tien_khau_hao = record.gia_tri_ban_dau / record.thoi_gian_toi_da
 
-            elif record.pp_khau_hao == 'degressive':  
+            elif record.pp_khau_hao == 'degressive':
                 if record.ty_le_khau_hao <= 0 or record.ty_le_khau_hao >= 100:
                     raise ValidationError("Tỷ lệ khấu hao phải nằm trong khoảng (0,100) !")
-                so_tien_khau_hao = record.gia_tri_hien_tai * (record.ty_le_khau_hao / 100) 
+                so_tien_khau_hao = record.gia_tri_hien_tai * (record.ty_le_khau_hao / 100)
 
-            so_tien_khau_hao = min(so_tien_khau_hao, record.gia_tri_hien_tai)  
+            so_tien_khau_hao = min(so_tien_khau_hao, record.gia_tri_hien_tai)
             ma_phieu_khau_hao = 'KH-' + record.ma_tai_san + '-' + datetime.now().strftime('%Y%m%d%H%M%S%f')
-
 
             self.env['lich_su_khau_hao'].create({
                 'ma_phieu_khau_hao': ma_phieu_khau_hao,
                 'ma_ts': record.id,
                 'ngay_khau_hao': fields.Datetime.now(),
                 'so_tien_khau_hao': so_tien_khau_hao,
-                'gia_tri_con_lai': record.gia_tri_hien_tai,
                 'loai_phieu': 'automatic',
                 'ghi_chu': f'Khấu hao tự động {fields.Date.today().strftime("%Y/%m")}'
             })
 
+            # Cập nhật thời gian sử dụng
             record.thoi_gian_su_dung += 1
 
-            self.env['bus.bus']._sendone(
-                self.env.user.partner_id, 
-                'simple_notification', 
-                {
-                    'title': 'Thành công',
-                    'message': f'Khấu hao tài sản "{record.ten_tai_san}" thành công!',
-                    'sticky': False,  
-                    'type': 'success'  
-                }
-            )
+            # Tạo thông báo thành công qua Bus
+            partner = self._get_notification_partner()
+            if partner:
+                self.env['bus.bus']._sendone(
+                    partner,
+                    'simple_notification',
+                    {
+                        'title': 'Thành công',
+                        'message': f'Khấu hao tài sản "{record.ten_tai_san}" thành công!',
+                        'sticky': False,
+                        'type': 'success'
+                    }
+                )
+
+    @api.model
+    def schedule_monthly_depreciation(self):
+        """Scheduled Job - chạy hàng tháng để tạo khấu hao tự động"""
+        # Prefer accounting module scheduled depreciation rules if configured
+        schedule_records = self.env['asset.depreciation.schedule'].sudo().search([('is_active', '=', True)])
+        if schedule_records:
+            schedule_records.action_generate_depreciation()
+            return True
+
+        assets = self.search([
+            ('pp_khau_hao', '!=', 'none'),
+            ('gia_tri_hien_tai', '>', 0),
+        ])
+
+        for asset in assets:
+            try:
+                current_month = datetime.now().strftime('%m/%Y')
+                existing = self.env['lich_su_khau_hao'].search([
+                    ('ma_ts', '=', asset.id),
+                    ('ghi_chu', 'ilike', f'%{current_month}%')
+                ], limit=1)
+
+                if not existing:
+                    asset.action_tinh_khau_hao()
+            except Exception as e:
+                partner = self._get_notification_partner()
+                if partner:
+                    self.env['bus.bus']._sendone(
+                        partner,
+                        'simple_notification',
+                        {
+                            'title': 'Lỗi khấu hao',
+                            'message': f'Lỗi khấu hao tài sản "{asset.ten_tai_san}": {str(e)}',
+                            'sticky': False,
+                            'type': 'danger'
+                        }
+                    )
+        return True
 

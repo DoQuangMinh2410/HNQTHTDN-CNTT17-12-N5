@@ -75,7 +75,5 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <!-- Menu -->
-        <menuitem id="gemini_config_menu" name="Cấu hình AI" parent="accounting_module_root" action="asset_gemini_config_action" sequence="4"/>
     </data>
 </odoo>

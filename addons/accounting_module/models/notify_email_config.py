@@ -53,7 +53,7 @@ class NotifyEmailConfig(models.Model):
     is_configured = fields.Boolean(
         string='Đã cấu hình',
         compute='_compute_is_configured',
-        store=False
+        store=True
     )
 
     # Test Results

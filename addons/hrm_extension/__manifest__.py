@@ -12,6 +12,7 @@
     'website': "http://www.yourcompany.com",
     'category': 'Human Resources',
     'version': '1.0',
+    'license': 'AGPL-3',
     'depends': ['base', 'nhan_su', 'quan_ly_tai_san', 'accounting_module'],
     'data': [
         'security/ir.model.access.csv',

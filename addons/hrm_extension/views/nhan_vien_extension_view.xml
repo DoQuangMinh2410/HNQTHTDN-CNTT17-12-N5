@@ -5,7 +5,7 @@
         <record id="nhan_vien_form_extend" model="ir.ui.view">
             <field name="name">nhan_vien.form.extend</field>
             <field name="model">nhan_vien</field>
-            <field name="inherit_id">nhan_su.nhan_vien_form</field>
+            <field name="inherit_id" ref="nhan_su.nhan_vien_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//sheet" position="inside">
                     <group string="Tài sản được giao">

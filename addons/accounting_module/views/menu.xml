@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
         <!-- Menu Root -->
-        <menuitem id="accounting_module_root" name="Kế toán" icon="fa-calculator" sequence="10"/>
+        <menuitem id="accounting_module_root" name="Kế toán" sequence="10"/>
         
         <!-- Submenu Khấu hao -->
         <menuitem id="depreciation_menu" name="Khấu hao" parent="accounting_module_root" sequence="1"/>
@@ -13,7 +12,11 @@
         <menuitem id="account_move_list_menu" name="Danh sách Bút toán" parent="account_move_menu" action="account_move_custom_action" sequence="1"/>
         
         <!-- Submenu AI -->
-        <menuitem id="ai_menu" name="AI & Báo cáo" parent="accounting_module_root" sequence="3"/>
+        <menuitem id="ai_menu" name="AI &amp; Báo cáo" parent="accounting_module_root" sequence="3"/>
         <menuitem id="ai_analysis_menu" name="Phân tích AI Tài sản" parent="ai_menu" action="asset_ai_analysis_action" sequence="1"/>
-    </data>
+        <menuitem id="gemini_config_menu" name="Cấu hình AI" parent="ai_menu" action="asset_gemini_config_action" sequence="4"/>
+        <menuitem id="notification_config_parent_menu" name="Cấu hình Thông báo" parent="accounting_module_root" sequence="5"/>
+        <menuitem id="notify_email_config_menu" name="Email" parent="notification_config_parent_menu" action="notify_email_config_action"/>
+        <menuitem id="notify_sms_config_menu" name="SMS" parent="notification_config_parent_menu" action="notify_sms_config_action"/>
+        <menuitem id="notification_log_menu" name="Nhật ký Thông báo" parent="accounting_module_root" action="notification_log_action" sequence="6"/>
 </odoo>

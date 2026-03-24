@@ -32,13 +32,15 @@ class LichSuKhauHao(models.Model):
     @api.model
     def create(self, vals):
         tai_san = self.env['tai_san'].browse(vals.get('ma_ts'))
+        skip_asset_update = self.env.context.get('skip_asset_update', False)
         if tai_san:
             so_tien_khau_hao = vals.get('so_tien_khau_hao', 0)
-            if tai_san.gia_tri_hien_tai == 0:
+            if not skip_asset_update and tai_san.gia_tri_hien_tai == 0:
                 raise ValidationError("Tài sản đã hết giá trị, không thể khấu hao !")
             if so_tien_khau_hao > tai_san.gia_tri_hien_tai:
                 so_tien_khau_hao = tai_san.gia_tri_hien_tai
-            tai_san.gia_tri_hien_tai = max(0, tai_san.gia_tri_hien_tai - so_tien_khau_hao)
-            # Update gia_tri_con_lai
-            vals['gia_tri_con_lai'] = tai_san.gia_tri_hien_tai  
+            if not skip_asset_update:
+                tai_san.gia_tri_hien_tai = max(0, tai_san.gia_tri_hien_tai - so_tien_khau_hao)
+            new_remaining_value = max(0, tai_san.gia_tri_hien_tai - (0 if skip_asset_update else 0))
+            vals['gia_tri_con_lai'] = tai_san.gia_tri_hien_tai
         return super().create(vals)    

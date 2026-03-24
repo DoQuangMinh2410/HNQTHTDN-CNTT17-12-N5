@@ -52,34 +52,58 @@ class AssetDepreciationSchedule(models.Model):
     def action_generate_depreciation(self):
         """Tạo lịch khấu hao hàng tháng"""
         Depreciation = self.env['asset.depreciation']
-        
+        LichSuKhauHao = self.env['lich_su_khau_hao']
+
         for record in self:
             if not record.is_active:
                 continue
-            
+
             # Kiểm tra khấu hao đã tạo
             existing = Depreciation.search([('asset_id', '=', record.asset_id.id)])
-            
+            asset = record.asset_id
+
             # Tạo khấu hao cho các tháng chưa có
             current_date = record.start_date
             for i in range(record.total_depreciation_periods):
                 month_key = current_date.strftime('%m/%Y')
-                
+
                 # Kiểm tra xem tháng này đã tạo chưa
                 month_exists = existing.filtered(lambda r: r.month == month_key)
-                
-                if not month_exists:
-                    Depreciation.create({
-                        'asset_id': record.asset_id.id,
-                        'original_value': record.original_value,
-                        'depreciation_amount': record.monthly_depreciation,
-                        'depreciation_method': record.depreciation_method,
-                        'date': current_date,
-                    })
-                
-                # Chuyển sang tháng tiếp theo
+
+                if month_exists:
+                    current_date += relativedelta(months=1)
+                    continue
+
+                if asset.gia_tri_hien_tai <= 0:
+                    break
+
+                depreciation = Depreciation.create({
+                    'asset_id': asset.id,
+                    'original_value': record.original_value,
+                    'depreciation_amount': record.monthly_depreciation,
+                    'depreciation_method': record.depreciation_method,
+                    'date': current_date,
+                })
+                existing |= depreciation
+
+                # Đồng bộ với model tài sản gốc
+                asset.write({
+                    'gia_tri_hien_tai': max(0.0, asset.gia_tri_hien_tai - depreciation.depreciation_amount),
+                    'thoi_gian_su_dung': asset.thoi_gian_su_dung + 1,
+                })
+
+                # Ghi lại lịch sử khấu hao (legacy) mà không trừ thêm giá trị tài sản nữa
+                LichSuKhauHao.with_context(skip_asset_update=True).create({
+                    'ma_phieu_khau_hao': f"KH-{asset.ma_tai_san}-{current_date.strftime('%Y%m%d%H%M%S')}",
+                    'ma_ts': asset.id,
+                    'ngay_khau_hao': fields.Datetime.to_string(datetime.combine(current_date, datetime.min.time())),
+                    'so_tien_khau_hao': depreciation.depreciation_amount,
+                    'loai_phieu': 'automatic',
+                    'ghi_chu': f'Khấu hao lịch trình {month_key}',
+                })
+
                 current_date += relativedelta(months=1)
-            
+
             # Gửi thông báo khấu hao hoàn thành
             self._send_completion_notification(record)
 
@@ -103,11 +127,12 @@ class AssetDepreciationSchedule(models.Model):
             notification_type = 'email_sms' if (email_configs and sms_configs) else ('email' if email_configs else 'sms')
             
             for recipient in recipients:
+                asset_name = record.asset_id.cus_rec_name or record.asset_id.ten_tai_san or str(record.asset_id.id)
                 email_body_text = f"""
-Khấu hao Tài sản: {record.asset_id.name}
+Khấu hao Tài sản: {asset_name}
 
 Chi tiết:
-- Tên tài sản: {record.asset_id.name}
+- Tên tài sản: {asset_name}
 - Giá trị khấu hao hàng tháng: {record.monthly_depreciation:,.0f} VND
 - Phương pháp: {dict(self._fields['depreciation_method'].selection).get(record.depreciation_method, record.depreciation_method)}
 - Thời gian sử dụng: {record.useful_life_months} tháng

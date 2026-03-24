@@ -220,9 +220,5 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <!-- Menu Items -->
-        <menuitem id="notification_config_parent_menu" name="Cấu hình Thông báo" parent="accounting_module_root" sequence="5"/>
-        <menuitem id="notify_email_config_menu" name="Email" parent="notification_config_parent_menu" action="notify_email_config_action"/>
-        <menuitem id="notify_sms_config_menu" name="SMS" parent="notification_config_parent_menu" action="notify_sms_config_action"/>
     </data>
 </odoo>
