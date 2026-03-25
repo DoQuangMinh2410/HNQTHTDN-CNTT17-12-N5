@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="account_move_custom_form" model="ir.ui.view">
+            <field name="name">account.move.custom.form</field>
+            <field name="model">account.move.custom</field>
+            <field name="arch" type="xml">
+                <form string="Bút toán Kế toán">
+                    <header>
+                        <button name="action_post" string="Ghi sổ" type="object" class="oe_highlight" states="draft"/>
+                        <button name="action_draft" string="Chuyển nháp" type="object" states="posted"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="asset_id"/>
+                                <field name="employee_id"/>
+                                <field name="date"/>
+                            </group>
+                            <group>
+                                <field name="amount"/>
+                                <field name="move_type"/>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="depreciation_id" readonly="1"/>
+                            <field name="notes" placeholder="Ghi chú..."/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="account_move_custom_tree" model="ir.ui.view">
+            <field name="name">account.move.custom.tree</field>
+            <field name="model">account.move.custom</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách Bút toán">
+                    <field name="date"/>
+                    <field name="asset_id"/>
+                    <field name="employee_id"/>
+                    <field name="amount"/>
+                    <field name="move_type"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="account_move_custom_search" model="ir.ui.view">
+            <field name="name">account.move.custom.search</field>
+            <field name="model">account.move.custom</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm Bút toán">
+                    <field name="asset_id"/>
+                    <field name="employee_id"/>
+                    <field name="date"/>
+                    <filter name="drafts" string="Nháp" domain="[('state', '=', 'draft')]"/>
+                    <filter name="posted" string="Đã ghi sổ" domain="[('state', '=', 'posted')]"/>
+                    <separator/>
+                    <filter name="depreciation" string="Khấu hao" domain="[('move_type', '=', 'depreciation')]"/>
+                    <filter name="disposal" string="Thanh lý" domain="[('move_type', '=', 'disposal')]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="account_move_custom_action" model="ir.actions.act_window">
+            <field name="name">Bút toán Kế toán</field>
+            <field name="res_model">account.move.custom</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="account_move_custom_search"/>
+        </record>
+    </data>
+</odoo>

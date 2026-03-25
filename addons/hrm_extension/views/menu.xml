@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Menu Root -->
+        <menuitem id="hrm_extension_root" name="HR Mở rộng" parent="nhan_su.menu_nhan_su_root" sequence="1"/>
+        
+        <!-- Asset Assignment Menu -->
+        <menuitem id="asset_assignment_menu" name="Gán Tài sản" parent="hrm_extension_root" action="asset_assignment_action" sequence="1"/>
+    </data>
+</odoo>

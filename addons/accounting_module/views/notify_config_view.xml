@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Email Config Form View -->
+        <record id="notify_email_config_form" model="ir.ui.view">
+            <field name="name">notify.email.config.form</field>
+            <field name="model">notify.email.config</field>
+            <field name="arch" type="xml">
+                <form string="Cấu hình Gửi Email Thông báo">
+                    <header>
+                        <button name="action_test_connection" string="🔗 Test Kết nối" type="object" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <div class="alert alert-info" role="alert">
+                            <strong>📧 Hướng dẫn:</strong>
+                            <ul>
+                                <li><strong>Gmail:</strong> Tạo Service Account tại <a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a></li>
+                                <li><strong>SMTP:</strong> Sử dụng mail server của công ty</li>
+                                <li><strong>SendGrid:</strong> Đăng ký tại <a href="https://sendgrid.com" target="_blank">SendGrid.com</a></li>
+                            </ul>
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="is_active"/>
+                                <field name="email_provider"/>
+                            </group>
+                            <group>
+                                <field name="is_configured" readonly="1" widget="badge"/>
+                                <field name="test_status" readonly="1" widget="badge"/>
+                            </group>
+                        </group>
+
+                        <!-- Gmail Configuration -->
+                        <group string="⚙️ Cấu hình Gmail" attrs="{'invisible': [('email_provider', '!=', 'gmail')]}">
+                            <group>
+                                <field name="gmail_sender_email" required="1" attrs="{'invisible': [('email_provider', '!=', 'gmail')]}"/>
+                                <field name="gmail_service_account_json" widget="ace" mode="json" required="1" attrs="{'invisible': [('email_provider', '!=', 'gmail')]}"/>
+                            </group>
+                        </group>
+
+                        <!-- SMTP Configuration -->
+                        <group string="⚙️ Cấu hình SMTP" attrs="{'invisible': [('email_provider', '!=', 'smtp')]}">
+                            <group>
+                                <field name="smtp_host" required="1" attrs="{'invisible': [('email_provider', '!=', 'smtp')]}"/>
+                                <field name="smtp_port" required="1" attrs="{'invisible': [('email_provider', '!=', 'smtp')]}"/>
+                            </group>
+                            <group>
+                                <field name="smtp_username" required="1" attrs="{'invisible': [('email_provider', '!=', 'smtp')]}"/>
+                                <field name="smtp_password" password="1" required="1" attrs="{'invisible': [('email_provider', '!=', 'smtp')]}"/>
+                                <field name="smtp_use_tls" attrs="{'invisible': [('email_provider', '!=', 'smtp')]}"/>
+                            </group>
+                        </group>
+
+                        <!-- SendGrid Configuration -->
+                        <group string="⚙️ Cấu hình SendGrid" attrs="{'invisible': [('email_provider', '!=', 'sendgrid')]}">
+                            <group>
+                                <field name="sendgrid_sender_email" required="1" attrs="{'invisible': [('email_provider', '!=', 'sendgrid')]}"/>
+                                <field name="sendgrid_api_key" password="1" required="1" attrs="{'invisible': [('email_provider', '!=', 'sendgrid')]}"/>
+                            </group>
+                        </group>
+
+                        <!-- General Settings -->
+                        <group string="⚙️ Cài đặt chung">
+                            <group>
+                                <field name="sender_name"/>
+                                <field name="reply_to_email"/>
+                            </group>
+                        </group>
+
+                        <!-- Test Results -->
+                        <group string="📊 Kết quả kiểm tra">
+                            <group>
+                                <field name="last_test" readonly="1"/>
+                                <field name="test_message" readonly="1" nolabel="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Email Config Tree View -->
+        <record id="notify_email_config_tree" model="ir.ui.view">
+            <field name="name">notify.email.config.tree</field>
+            <field name="model">notify.email.config</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách Cấu hình Email">
+                    <field name="name"/>
+                    <field name="email_provider"/>
+                    <field name="is_configured" widget="boolean"/>
+                    <field name="is_active" widget="boolean"/>
+                    <field name="test_status" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Email Config Search View -->
+        <record id="notify_email_config_search" model="ir.ui.view">
+            <field name="name">notify.email.config.search</field>
+            <field name="model">notify.email.config</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm Cấu hình Email">
+                    <field name="name"/>
+                    <field name="email_provider"/>
+                    <filter name="active" string="Hoạt động" domain="[('is_active', '=', True)]"/>
+                    <filter name="configured" string="Đã cấu hình" domain="[('is_configured', '=', True)]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Email Config Action -->
+        <record id="notify_email_config_action" model="ir.actions.act_window">
+            <field name="name">Cấu hình Email Thông báo</field>
+            <field name="res_model">notify.email.config</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- SMS Config Form View -->
+        <record id="notify_sms_config_form" model="ir.ui.view">
+            <field name="name">notify.sms.config.form</field>
+            <field name="model">notify.sms.config</field>
+            <field name="arch" type="xml">
+                <form string="Cấu hình Gửi SMS Thông báo">
+                    <header>
+                        <button name="action_test_connection" string="🔗 Test Kết nối" type="object" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <div class="alert alert-info" role="alert">
+                            <strong>📱 Hướng dẫn:</strong>
+                            <ul>
+                                <li><strong>Viettel SMS:</strong> Liên hệ Viettel để lấy API credentials</li>
+                                <li><strong>Twilio:</strong> Đăng ký tại <a href="https://twilio.com" target="_blank">Twilio.com</a></li>
+                                <li><strong>AWS SNS:</strong> Sử dụng AWS account</li>
+                            </ul>
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="is_active"/>
+                                <field name="sms_provider"/>
+                            </group>
+                            <group>
+                                <field name="is_configured" readonly="1" widget="badge"/>
+                                <field name="test_status" readonly="1" widget="badge"/>
+                            </group>
+                        </group>
+
+                        <!-- Viettel Configuration -->
+                        <group string="⚙️ Cấu hình Viettel SMS" attrs="{'invisible': [('sms_provider', '!=', 'viettel')]}">
+                            <group>
+                                <field name="viettel_api_url" required="1" attrs="{'invisible': [('sms_provider', '!=', 'viettel')]}"/>
+                                <field name="viettel_cp_code" required="1" attrs="{'invisible': [('sms_provider', '!=', 'viettel')]}"/>
+                            </group>
+                            <group>
+                                <field name="viettel_username" required="1" attrs="{'invisible': [('sms_provider', '!=', 'viettel')]}"/>
+                                <field name="viettel_password" password="1" required="1" attrs="{'invisible': [('sms_provider', '!=', 'viettel')]}"/>
+                                <field name="viettel_sender" required="1" attrs="{'invisible': [('sms_provider', '!=', 'viettel')]}"/>
+                            </group>
+                        </group>
+
+                        <!-- Twilio Configuration -->
+                        <group string="⚙️ Cấu hình Twilio" attrs="{'invisible': [('sms_provider', '!=', 'twilio')]}">
+                            <group>
+                                <field name="twilio_account_sid" password="1" required="1" attrs="{'invisible': [('sms_provider', '!=', 'twilio')]}"/>
+                                <field name="twilio_auth_token" password="1" required="1" attrs="{'invisible': [('sms_provider', '!=', 'twilio')]}"/>
+                                <field name="twilio_phone_number" required="1" attrs="{'invisible': [('sms_provider', '!=', 'twilio')]}"/>
+                            </group>
+                        </group>
+
+                        <!-- AWS SNS Configuration -->
+                        <group string="⚙️ Cấu hình AWS SNS" attrs="{'invisible': [('sms_provider', '!=', 'aws_sns')]}">
+                            <group>
+                                <field name="aws_access_key" password="1" required="1" attrs="{'invisible': [('sms_provider', '!=', 'aws_sns')]}"/>
+                                <field name="aws_secret_key" password="1" required="1" attrs="{'invisible': [('sms_provider', '!=', 'aws_sns')]}"/>
+                                <field name="aws_region" attrs="{'invisible': [('sms_provider', '!=', 'aws_sns')]}"/>
+                            </group>
+                        </group>
+
+                        <!-- General Settings -->
+                        <group string="⚙️ Cài đặt chung">
+                            <group>
+                                <field name="message_encoding"/>
+                            </group>
+                        </group>
+
+                        <!-- Test Results -->
+                        <group string="📊 Kết quả kiểm tra">
+                            <group>
+                                <field name="last_test" readonly="1"/>
+                                <field name="test_message" readonly="1" nolabel="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- SMS Config Tree View -->
+        <record id="notify_sms_config_tree" model="ir.ui.view">
+            <field name="name">notify.sms.config.tree</field>
+            <field name="model">notify.sms.config</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách Cấu hình SMS">
+                    <field name="name"/>
+                    <field name="sms_provider"/>
+                    <field name="is_configured" widget="boolean"/>
+                    <field name="is_active" widget="boolean"/>
+                    <field name="test_status" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- SMS Config Action -->
+        <record id="notify_sms_config_action" model="ir.actions.act_window">
+            <field name="name">Cấu hình SMS Thông báo</field>
+            <field name="res_model">notify.sms.config</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

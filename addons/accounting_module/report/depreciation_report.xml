@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Depreciation Report View (Tree) -->
+        <record id="report_template_depreciation" model="ir.ui.view">
+            <field name="name">asset.depreciation.report</field>
+            <field name="model">asset.depreciation</field>
+            <field name="arch" type="xml">
+                <tree string="Báo cáo Khấu hao">
+                    <field name="date"/>
+                    <field name="asset_id"/>
+                    <field name="employee_id"/>
+                    <field name="depreciation_amount"/>
+                    <field name="remaining_value"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

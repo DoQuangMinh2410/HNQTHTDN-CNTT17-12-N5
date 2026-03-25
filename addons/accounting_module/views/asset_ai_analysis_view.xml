@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="asset_ai_analysis_form" model="ir.ui.view">
+            <field name="name">asset.ai.analysis.form</field>
+            <field name="model">asset.ai.analysis</field>
+            <field name="arch" type="xml">
+                <form string="Phân tích AI Tài sản">
+                    <header>
+                        <button name="action_analyze" string="Chạy Phân tích" type="object" class="oe_highlight" states="draft"/>
+                        <button name="action_export_report" string="Xuất Báo cáo" type="object" class="oe_highlight" states="analyzed"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="analysis_date"/>
+                                <field name="total_assets"/>
+                                <field name="total_value"/>
+                                <field name="average_depreciation"/>
+                            </group>
+                        </group>
+                        <field name="analysis_text" widget="html" readonly="1"/>
+                        <field name="recommendations" widget="html" readonly="1"/>
+                        <field name="anomalies" widget="html" readonly="1"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="asset_ai_analysis_tree" model="ir.ui.view">
+            <field name="name">asset.ai.analysis.tree</field>
+            <field name="model">asset.ai.analysis</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách Phân tích">
+                    <field name="analysis_date"/>
+                    <field name="total_assets"/>
+                    <field name="total_value"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="asset_ai_analysis_search" model="ir.ui.view">
+            <field name="name">asset.ai.analysis.search</field>
+            <field name="model">asset.ai.analysis</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm Phân tích">
+                    <field name="analysis_date"/>
+                    <filter name="drafts" string="Nháp" domain="[('state', '=', 'draft')]"/>
+                    <filter name="analyzed" string="Đã phân tích" domain="[('state', '=', 'analyzed')]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="asset_ai_analysis_action" model="ir.actions.act_window">
+            <field name="name">Phân tích AI Tài sản</field>
+            <field name="res_model">asset.ai.analysis</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="asset_ai_analysis_search"/>
+        </record>
+    </data>
+</odoo>

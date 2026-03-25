@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Demo Employee -->
+        <record id="demo_employee_1" model="nhan_vien">
+            <field name="ma_dinh_danh">NV001</field>
+            <field name="ho_ten">Nguyễn Văn A</field>
+            <field name="ngay_sinh">1990-01-15</field>
+            <field name="email">nguyenvana@example.com</field>
+            <field name="so_dien_thoai">0912345678</field>
+        </record>
+
+        <record id="demo_employee_2" model="nhan_vien">
+            <field name="ma_dinh_danh">NV002</field>
+            <field name="ho_ten">Trần Thị B</field>
+            <field name="ngay_sinh">1992-05-20</field>
+            <field name="email">tranthib@example.com</field>
+            <field name="so_dien_thoai">0987654321</field>
+        </record>
+
+        <!-- Demo Asset Category (Reference from quan_ly_tai_san) -->
+        <record id="demo_asset_category_1" model="danh_muc_tai_san">
+            <field name="ten_danh_muc">Máy tính</field>
+            <field name="loai_tai_san">cong_nghe</field>
+        </record>
+
+        <record id="demo_asset_category_2" model="danh_muc_tai_san">
+            <field name="ten_danh_muc">Bàn ghế</field>
+            <field name="loai_tai_san">co_so_vat_chat</field>
+        </record>
+
+        <!-- Demo Assets -->
+        <record id="demo_asset_1" model="tai_san">
+            <field name="ma_tai_san">TS001</field>
+            <field name="ten_tai_san">Laptop Dell XPS 13</field>
+            <field name="ngay_mua_ts">2022-01-15</field>
+            <field name="don_vi_tien_te">vnd</field>
+            <field name="gia_tri_ban_dau">25000000</field>
+            <field name="gia_tri_hien_tai">25000000</field>
+            <field name="danh_muc_ts_id" ref="demo_asset_category_1"/>
+            <field name="pp_khau_hao">straight-line</field>
+            <field name="thoi_gian_toi_da">5</field>
+            <field name="don_vi_tinh">Chiếc</field>
+            <field name="phan_bo_employee_id" ref="demo_employee_1"/>
+            <field name="assignment_date">2023-01-01</field>
+            <field name="usage_status">draft</field>
+        </record>
+
+        <record id="demo_asset_2" model="tai_san">
+            <field name="ma_tai_san">TS002</field>
+            <field name="ten_tai_san">Bàn làm việc gỗ</field>
+            <field name="ngay_mua_ts">2021-06-10</field>
+            <field name="don_vi_tien_te">vnd</field>
+            <field name="gia_tri_ban_dau">5000000</field>
+            <field name="gia_tri_hien_tai">5000000</field>
+            <field name="danh_muc_ts_id" ref="demo_asset_category_2"/>
+            <field name="pp_khau_hao">straight-line</field>
+            <field name="thoi_gian_toi_da">10</field>
+            <field name="don_vi_tinh">Chiếc</field>
+            <field name="phan_bo_employee_id" ref="demo_employee_2"/>
+            <field name="assignment_date">2023-01-01</field>
+            <field name="usage_status">draft</field>
+        </record>
+
+        <!-- Demo Depreciation Schedule -->
+        <record id="demo_depreciation_schedule_1" model="asset.depreciation.schedule">
+            <field name="asset_id" ref="demo_asset_1"/>
+            <field name="original_value">25000000</field>
+            <field name="depreciation_method">straight_line</field>
+            <field name="useful_life_months">60</field>
+            <field name="start_date">2023-01-01</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="demo_depreciation_schedule_2" model="asset.depreciation.schedule">
+            <field name="asset_id" ref="demo_asset_2"/>
+            <field name="original_value">5000000</field>
+            <field name="depreciation_method">straight_line</field>
+            <field name="useful_life_months">120</field>
+            <field name="start_date">2023-01-01</field>
+            <field name="is_active">True</field>
+        </record>
+    </data>
+</odoo>

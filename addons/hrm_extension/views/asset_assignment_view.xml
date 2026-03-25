@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Form View -->
+        <record id="asset_assignment_form" model="ir.ui.view">
+            <field name="name">asset.assignment.form</field>
+            <field name="model">asset.assignment</field>
+            <field name="arch" type="xml">
+                <form string="Gán Tài sản">
+                    <header>
+                        <button name="action_return_asset" string="Thu hồi" type="object" class="oe_highlight" states="assigned"/>
+                        <button name="action_mark_damaged" string="Đánh dấu hư hỏng" type="object" class="oe_highlight" states="assigned"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="asset_id"/>
+                                <field name="employee_id"/>
+                                <field name="assignment_date"/>
+                                <field name="end_date"/>
+                            </group>
+                            <group>
+                                <field name="notes"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="asset_assignment_tree" model="ir.ui.view">
+            <field name="name">asset.assignment.tree</field>
+            <field name="model">asset.assignment</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách Gán Tài sản">
+                    <field name="asset_id"/>
+                    <field name="employee_id"/>
+                    <field name="assignment_date"/>
+                    <field name="end_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="asset_assignment_search" model="ir.ui.view">
+            <field name="name">asset.assignment.search</field>
+            <field name="model">asset.assignment</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm Gán Tài sản">
+                    <field name="asset_id"/>
+                    <field name="employee_id"/>
+                    <filter name="assigned" string="Đang gán" domain="[('state', '=', 'assigned')]"/>
+                    <filter name="returned" string="Đã thu hồi" domain="[('state', '=', 'returned')]"/>
+                    <filter name="damaged" string="Hư hỏng" domain="[('state', '=', 'damaged')]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="asset_assignment_action" model="ir.actions.act_window">
+            <field name="name">Gán Tài sản cho Nhân viên</field>
+            <field name="res_model">asset.assignment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="asset_assignment_search"/>
+        </record>
+    </data>
+</odoo>

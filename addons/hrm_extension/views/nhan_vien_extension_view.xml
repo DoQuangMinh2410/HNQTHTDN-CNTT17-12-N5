@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Extend nhan_vien form to show assets -->
+        <record id="nhan_vien_form_extend" model="ir.ui.view">
+            <field name="name">nhan_vien.form.extend</field>
+            <field name="model">nhan_vien</field>
+            <field name="inherit_id" ref="nhan_su.nhan_vien_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="inside">
+                    <group string="Tài sản được giao">
+                        <field name="asset_assignment_ids" nolabel="1">
+                            <tree>
+                                <field name="asset_id"/>
+                                <field name="assignment_date"/>
+                                <field name="state"/>
+                            </tree>
+                        </field>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

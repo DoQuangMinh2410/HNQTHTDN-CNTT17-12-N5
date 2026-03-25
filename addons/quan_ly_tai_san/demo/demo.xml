@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Demo Asset Categories -->
+        <record id="demo_asset_category_1" model="danh_muc_tai_san">
+            <field name="ma_danh_muc">DM001</field>
+            <field name="ten_danh_muc">Máy tính & Thiết bị văn phòng</field>
+            <field name="mo_ta">Các thiết bị máy tính, máy in, văn phòng phẩm</field>
+        </record>
+
+        <record id="demo_asset_category_2" model="danh_muc_tai_san">
+            <field name="ma_danh_muc">DM002</field>
+            <field name="ten_danh_muc">Phương tiện vận tải</field>
+            <field name="mo_ta">Ô tô, xe máy công ty</field>
+        </record>
+
+        <!-- Demo Assets -->
+        <record id="demo_asset_1" model="tai_san">
+            <field name="ma_tai_san">TS001</field>
+            <field name="ten_tai_san">Máy tính Dell Inspiron</field>
+            <field name="ngay_mua_ts">2024-01-15</field>
+            <field name="gia_tri_ban_dau">25000000</field>
+            <field name="gia_tri_hien_tai">25000000</field>
+            <field name="danh_muc_ts_id" ref="demo_asset_category_1"/>
+            <field name="pp_khau_hao">straight-line</field>
+            <field name="thoi_gian_toi_da">5</field>
+            <field name="don_vi_tinh">Chiếc</field>
+        </record>
+
+        <record id="demo_asset_2" model="tai_san">
+            <field name="ma_tai_san">TS002</field>
+            <field name="ten_tai_san">Ô tô Toyota Camry</field>
+            <field name="ngay_mua_ts">2023-06-01</field>
+            <field name="gia_tri_ban_dau">800000000</field>
+            <field name="gia_tri_hien_tai">800000000</field>
+            <field name="danh_muc_ts_id" ref="demo_asset_category_2"/>
+            <field name="pp_khau_hao">degressive</field>
+            <field name="ty_le_khau_hao">15</field>
+            <field name="thoi_gian_toi_da">10</field>
+            <field name="don_vi_tinh">Chiếc</field>
+        </record>
+
+        <!-- Demo Depreciation Schedule -->
+        <record id="demo_depreciation_schedule_1" model="asset.depreciation.schedule">
+            <field name="asset_id" ref="demo_asset_1"/>
+            <field name="original_value">25000000</field>
+            <field name="depreciation_method">straight_line</field>
+            <field name="useful_life_months">60</field>
+            <field name="start_date">2024-01-15</field>
+        </record>
+
+        <!-- Demo AI Analysis -->
+        <record id="demo_ai_analysis_1" model="asset.ai.analysis">
+            <field name="analysis_date">2026-03-23</field>
+            <field name="total_assets">2</field>
+            <field name="total_value">825000000</field>
+            <field name="average_depreciation">500000</field>
+            <field name="analysis_text">📊 Phân tích demo: Hệ thống có 2 tài sản với tổng giá trị 825 triệu VNĐ</field>
+            <field name="recommendations">💡 Khuyến nghị: Tiếp tục theo dõi khấu hao hàng tháng</field>
+            <field name="anomalies">⚠️ Không phát hiện bất thường</field>
+            <field name="state">analyzed</field>
+        </record>
+    </data>
+</odoo></content>
+<parameter name="filePath">/home/zonoo/HNQTHTDN-CNTT17-12-N5/addons/quan_ly_tai_san/demo/demo.xml

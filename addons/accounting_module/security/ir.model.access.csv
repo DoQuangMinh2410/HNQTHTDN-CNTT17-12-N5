@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_asset_depreciation_user,asset.depreciation.user,model_asset_depreciation,base.group_user,1,1,1,1
+access_asset_depreciation_manager,asset.depreciation.manager,model_asset_depreciation,base.group_system,1,1,1,1
+access_account_move_custom_user,account.move.custom.user,model_account_move_custom,base.group_user,1,1,1,1
+access_account_move_custom_manager,account.move.custom.manager,model_account_move_custom,base.group_system,1,1,1,1
+access_asset_depreciation_schedule_user,asset.depreciation.schedule.user,model_asset_depreciation_schedule,base.group_user,1,1,1,1
+access_asset_depreciation_schedule_manager,asset.depreciation.schedule.manager,model_asset_depreciation_schedule,base.group_system,1,1,1,1
+access_asset_ai_analysis_user,asset.ai.analysis.user,model_asset_ai_analysis,base.group_user,1,1,1,0
+access_asset_ai_analysis_manager,asset.ai.analysis.manager,model_asset_ai_analysis,base.group_system,1,1,1,1
+access_asset_gemini_config_manager,asset.gemini.config.manager,model_asset_gemini_config,base.group_system,1,1,1,1
+access_asset_gemini_config_user,asset.gemini.config.user,model_asset_gemini_config,base.group_user,1,0,0,0
+access_notify_email_config_manager,notify.email.config.manager,model_notify_email_config,base.group_system,1,1,1,1
+access_notify_email_config_user,notify.email.config.user,model_notify_email_config,base.group_user,1,0,0,0
+access_notify_sms_config_manager,notify.sms.config.manager,model_notify_sms_config,base.group_system,1,1,1,1
+access_notify_sms_config_user,notify.sms.config.user,model_notify_sms_config,base.group_user,1,0,0,0
+access_notification_log_user,notification.log.user,model_notification_log,base.group_user,1,1,1,0
+access_notification_log_manager,notification.log.manager,model_notification_log,base.group_system,1,1,1,1
