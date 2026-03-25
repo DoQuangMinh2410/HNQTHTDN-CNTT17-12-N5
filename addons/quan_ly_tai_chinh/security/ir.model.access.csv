@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tai_khoan,tai_khoan_ke_toan.tai_khoan_ke_toan,model_tai_khoan_ke_toan,base.group_user,1,1,1,1
+access_but_toan,but_toan.but_toan_ke_toan,model_but_toan_ke_toan,base.group_user,1,1,1,1
+access_chi_tiet,chi_tiet.chi_tiet_but_toan,model_chi_tiet_but_toan,base.group_user,1,1,1,1
+access_bao_cao,bao_cao.bao_cao_tai_chinh,model_bao_cao_tai_chinh,base.group_user,1,1,1,1

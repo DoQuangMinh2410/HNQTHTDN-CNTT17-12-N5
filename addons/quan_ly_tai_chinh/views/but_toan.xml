@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_but_toan_form" model="ir.ui.view">
+            <field name="name">but_toan_ke_toan.form</field>
+            <field name="model">but_toan_ke_toan</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_ghi_so" string="Ghi sổ" type="object" class="btn-primary" attrs="{'invisible': [('trang_thai','!=','nhap')]}"/>
+                        <button name="action_huy_ghi_so" string="Hủy ghi sổ" type="object" attrs="{'invisible': [('trang_thai','!=','da_ghi_so')]}"/>
+                        <field name="trang_thai" widget="statusbar" statusbar_visible="nhap,da_ghi_so"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <group>
+                                <field name="invoice_file" widget="binary" string="Tải lên Hóa đơn (AI OCR)"/>
+                                <button name="action_ai_ocr_invoice" string="AI Bóc tách Hóa đơn" type="object" class="oe_highlight" icon="fa-magic"/>
+                            </group>
+                            <h1><field name="so_chung_tu" readonly="1" force_save="1"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="ngay_ghi_so"/>
+                                <field name="dien_giai"/>
+                            </group>
+                            <group>
+                                <field name="nguon_goc" readonly="1"/>
+                                <field name="tham_chieu" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Chi tiết Nợ/Có">
+                                <field name="chi_tiet_ids" attrs="{'readonly': [('trang_thai','=','da_ghi_so')]}">
+                                    <tree editable="bottom">
+                                        <field name="tai_khoan_id"/>
+                                        <field name="doi_tuong"/>
+                                        <field name="dien_giai"/>
+                                        <field name="loai"/>
+                                        <field name="so_tien" sum="Tổng tiền"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="tong_no" widget="monetary" options="{'currency_field': False}"/>
+                                    <field name="tong_co" widget="monetary" options="{'currency_field': False}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_but_toan_tree" model="ir.ui.view">
+            <field name="name">but_toan_ke_toan.tree</field>
+            <field name="model">but_toan_ke_toan</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="trang_thai == 'nhap'" decoration-success="trang_thai == 'da_ghi_so'">
+                    <field name="so_chung_tu"/>
+                    <field name="ngay_ghi_so"/>
+                    <field name="dien_giai"/>
+                    <field name="tong_no" sum="Tổng Nợ"/>
+                    <field name="tong_co" sum="Tổng Có"/>
+                    <field name="tham_chieu"/>
+                    <field name="nguon_goc"/>
+                    <field name="trang_thai" widget="badge" 
+                           decoration-warning="trang_thai == 'nhap'"
+                           decoration-success="trang_thai == 'da_ghi_so'"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_but_toan_search" model="ir.ui.view">
+            <field name="name">but_toan_ke_toan.search</field>
+            <field name="model">but_toan_ke_toan</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm bút toán">
+                    <field name="so_chung_tu"/>
+                    <field name="dien_giai"/>
+                    <field name="tham_chieu"/>
+                    <separator/>
+                    <filter string="Nháp" name="nhap" domain="[('trang_thai','=','nhap')]"/>
+                    <filter string="Đã ghi sổ" name="da_ghi_so" domain="[('trang_thai','=','da_ghi_so')]"/>
+                    <group expand="0" string="Nhóm theo">
+                        <filter string="Trạng thái" name="group_trang_thai" context="{'group_by': 'trang_thai'}"/>
+                        <filter string="Nguồn gốc" name="group_nguon_goc" context="{'group_by': 'nguon_goc'}"/>
+                        <filter string="Ngày ghi sổ" name="group_ngay" context="{'group_by': 'ngay_ghi_so'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_but_toan" model="ir.actions.act_window">
+            <field name="name">Sổ Nhật ký chung</field>
+            <field name="res_model">but_toan_ke_toan</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_but_toan_search"/>
+        </record>
+    </data>
+</odoo>

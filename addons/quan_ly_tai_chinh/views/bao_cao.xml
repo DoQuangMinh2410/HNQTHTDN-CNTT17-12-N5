@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_bao_cao_tai_chinh_form" model="ir.ui.view">
+            <field name="name">bao_cao_tai_chinh.form</field>
+            <field name="model">bao_cao_tai_chinh</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo Kết quả Kinh doanh">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>Báo cáo Kết quả Kinh doanh</h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="thang"/>
+                                <field name="nam"/>
+                            </group>
+                            <group>
+                                <button name="action_refresh" string="Làm mới dữ liệu" type="object" class="btn-secondary" icon="fa-refresh"/>
+                            </group>
+                        </group>
+                        <hr/>
+                        <group>
+                            <group string="Tóm tắt tài chính">
+                                <field name="tong_doanh_thu" widget="monetary" options="{'currency_field': False}" decoration-success="tong_doanh_thu > 0"/>
+                                <field name="tong_chi_phi" widget="monetary" options="{'currency_field': False}" decoration-danger="tong_chi_phi > 0"/>
+                                <field name="loi_nhuan" widget="monetary" options="{'currency_field': False}" 
+                                       decoration-success="loi_nhuan > 0" decoration-danger="loi_nhuan &lt; 0"
+                                       style="font-weight: bold; font-size: 1.2em;"/>
+                            </group>
+                        </group>
+                        <footer>
+                            <button name="action_view_details" string="Xem chi tiết phát sinh" type="object" class="oe_highlight"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_bao_cao_tai_chinh" model="ir.actions.act_window">
+            <field name="name">Báo cáo P&amp;L</field>
+            <field name="res_model">bao_cao_tai_chinh</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+    </data>
+</odoo>

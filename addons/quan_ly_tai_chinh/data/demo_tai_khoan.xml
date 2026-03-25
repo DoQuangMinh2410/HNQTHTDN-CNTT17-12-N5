@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Dữ liệu mẫu Hệ thống tài khoản kế toán -->
+        <record id="tk_111" model="tai_khoan_ke_toan">
+            <field name="ma_tai_khoan">111</field>
+            <field name="ten_tai_khoan">Tiền mặt</field>
+            <field name="loai_tai_khoan">tai_san</field>
+        </record>
+        <record id="tk_112" model="tai_khoan_ke_toan">
+            <field name="ma_tai_khoan">112</field>
+            <field name="ten_tai_khoan">Tiền gửi ngân hàng</field>
+            <field name="loai_tai_khoan">tai_san</field>
+        </record>
+        <record id="tk_211" model="tai_khoan_ke_toan">
+            <field name="ma_tai_khoan">211</field>
+            <field name="ten_tai_khoan">Tài sản cố định hữu hình</field>
+            <field name="loai_tai_khoan">tai_san</field>
+        </record>
+        <record id="tk_214" model="tai_khoan_ke_toan">
+            <field name="ma_tai_khoan">214</field>
+            <field name="ten_tai_khoan">Hao mòn TSCĐ</field>
+            <field name="loai_tai_khoan">tai_san</field>
+        </record>
+        <record id="tk_334" model="tai_khoan_ke_toan">
+            <field name="ma_tai_khoan">334</field>
+            <field name="ten_tai_khoan">Phải trả người lao động</field>
+            <field name="loai_tai_khoan">nguon_von</field>
+        </record>
+        <record id="tk_642" model="tai_khoan_ke_toan">
+            <field name="ma_tai_khoan">642</field>
+            <field name="ten_tai_khoan">Chi phí quản lý doanh nghiệp</field>
+            <field name="loai_tai_khoan">chi_phi</field>
+        </record>
+        <record id="tk_141" model="tai_khoan_ke_toan">
+            <field name="ma_tai_khoan">141</field>
+            <field name="ten_tai_khoan">Tạm ứng</field>
+            <field name="loai_tai_khoan">tai_san</field>
+        </record>
+        <record id="tk_511" model="tai_khoan_ke_toan">
+            <field name="ma_tai_khoan">511</field>
+            <field name="ten_tai_khoan">Doanh thu bán hàng và cung cấp dịch vụ</field>
+            <field name="loai_tai_khoan">doanh_thu</field>
+        </record>
+        <record id="tk_811" model="tai_khoan_ke_toan">
+            <field name="ma_tai_khoan">811</field>
+            <field name="ten_tai_khoan">Chi phí khác</field>
+            <field name="loai_tai_khoan">chi_phi</field>
+        </record>
+    </data>
+</odoo>

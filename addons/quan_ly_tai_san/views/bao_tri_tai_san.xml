@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_bao_tri_tai_san_form" model="ir.ui.view">
+            <field name="name">bao_tri_tai_san.form</field>
+            <field name="model">bao_tri_tai_san</field>
+            <field name="arch" type="xml">
+                <form string="Bảo trì Tài sản">
+                    <header>
+                        <button name="action_dang_sua" string="Bắt đầu sửa chữa" type="object" class="btn-primary" attrs="{'invisible': [('trang_thai', '!=', 'nhap')]}"/>
+                        <button name="action_hoan_thanh" string="Hoàn thành &amp; Ghi nhận chi phí" type="object" class="btn-primary" attrs="{'invisible': [('trang_thai', '!=', 'dang_sua')]}"/>
+                        <button name="action_huy" string="Hủy bỏ" type="object" attrs="{'invisible': [('trang_thai', 'in', ['hoan_thanh', 'huy'])]}"/>
+                        <field name="trang_thai" widget="statusbar" statusbar_visible="nhap,dang_sua,hoan_thanh"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="ma_phieu" readonly="1" force_save="1"/></h1>
+                        </div>
+                        <group>
+                            <group string="Thông tin phiếu YC">
+                                <field name="tai_san_id"/>
+                                <field name="nguoi_yeu_cau_id"/>
+                                <field name="ngay_lap"/>
+                            </group>
+                            <group string="Thời gian &amp; Chi phí">
+                                <field name="don_vi_sua_chua"/>
+                                <field name="ngay_du_kien_hoan_thanh"/>
+                                <field name="ngay_hoan_thanh" attrs="{'invisible': [('trang_thai', '!=', 'hoan_thanh')]}"/>
+                                <field name="chi_phi_sua_chua" widget="monetary" options="{'currency_field': False}"/>
+                            </group>
+                        </group>
+                        <group string="Nội dung">
+                            <field name="noi_dung" nolabel="1" placeholder="Nhập tình trạng hỏng hóc hoặc nội dung cần bảo trì..."/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_bao_tri_tai_san_tree" model="ir.ui.view">
+            <field name="name">bao_tri_tai_san.tree</field>
+            <field name="model">bao_tri_tai_san</field>
+            <field name="arch" type="xml">
+                <tree decoration-muted="trang_thai == 'huy'" decoration-success="trang_thai == 'hoan_thanh'" decoration-info="trang_thai == 'dang_sua'">
+                    <field name="ma_phieu"/>
+                    <field name="tai_san_id"/>
+                    <field name="ngay_lap"/>
+                    <field name="ngay_du_kien_hoan_thanh"/>
+                    <field name="chi_phi_sua_chua" sum="Tổng chi phí"/>
+                    <field name="trang_thai" widget="badge" 
+                           decoration-success="trang_thai == 'hoan_thanh'"
+                           decoration-info="trang_thai == 'dang_sua'"
+                           decoration-muted="trang_thai == 'huy'"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_bao_tri_tai_san" model="ir.actions.act_window">
+            <field name="name">Lịch sử Bảo trì/Sửa chữa</field>
+            <field name="res_model">bao_tri_tai_san</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

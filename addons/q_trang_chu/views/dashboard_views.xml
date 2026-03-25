@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Client Action for Dashboard -->
+    <record id="action_hndn_dashboard" model="ir.actions.client">
+        <field name="name">Trang Chủ HNDN</field>
+        <field name="tag">q_trang_chu.dashboard</field>
+    </record>
+
+    <!-- Top Level Menu -->
+    <menuitem id="menu_hndn_dashboard_root"
+              name="Trang Chủ"
+              action="action_hndn_dashboard"
+              web_icon="q_trang_chu,static/description/icon.png"
+              sequence="1"/>
+</odoo>

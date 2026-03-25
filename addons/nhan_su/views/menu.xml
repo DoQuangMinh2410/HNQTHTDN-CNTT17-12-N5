@@ -1,16 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <!-- ROOT MENU -->
         <menuitem
-            id="menu_root"
-            name="QLNS"
-            sequence="0"/>
+            id="menu_hrm_root"
+            name="Quản Lý Nhân Sự (HRM)"
+            web_icon="nhan_su,static/description/icon.png"
+            sequence="10"/>
           
-        <menuitem name="Quản lý nhân viên" 
+        <!-- CATEGORIES -->
+        <menuitem id="menu_hrm_nhan_su" name="Nhân sự" parent="menu_hrm_root" sequence="10"/>
+        <menuitem id="menu_hrm_hop_dong" name="Hợp đồng" parent="menu_hrm_root" sequence="20"/>
+        <menuitem id="menu_hrm_cham_cong_luong" name="Chấm công &amp; Lương" parent="menu_hrm_root" sequence="30"/>
+        <menuitem id="menu_hrm_nghi_phep" name="Nghỉ phép" parent="menu_hrm_root" sequence="40"/>
+        <menuitem id="menu_hrm_khen_thuong_ky_luat" name="Khen thưởng - Kỷ luật" parent="menu_hrm_root" sequence="50"/>
+
+        <!-- NHÂN SỰ -->
+        <menuitem name="Hồ sơ nhân viên" 
             id="menu_nhan_vien" 
-            parent="menu_root" 
-            sequence="1"
+            parent="menu_hrm_nhan_su" 
+            sequence="10"
             action="action_nhan_vien"
         />
+        <menuitem name="Phòng ban" 
+            id="menu_phong_ban" 
+            parent="menu_hrm_nhan_su" 
+            sequence="20"
+            action="action_phong_ban"
+        />
+        <menuitem name="Chức vụ" 
+            id="menu_chuc_vu" 
+            parent="menu_hrm_nhan_su" 
+            sequence="30"
+            action="action_chuc_vu"
+        />
+        <menuitem name="Lịch sử công tác" 
+            id="menu_lich_su_cong_tac" 
+            parent="menu_hrm_nhan_su" 
+            sequence="40"
+            action="action_lich_su_cong_tac"
+        />
+        <menuitem name="Tạm ứng nhân viên" 
+            id="menu_tam_ung" 
+            parent="menu_hrm_nhan_su" 
+            sequence="50"
+            action="action_tam_ung"
+        />
+
+        <!-- HỢP ĐỒNG -->
+        <menuitem name="Hợp đồng lao động" 
+            id="menu_hop_dong" 
+            parent="menu_hrm_hop_dong" 
+            sequence="10"
+            action="action_hop_dong"
+        />
+
+        <!-- CHẤM CÔNG & LƯƠNG -->
+        <menuitem name="Chấm công" 
+            id="menu_cham_cong" 
+            parent="menu_hrm_cham_cong_luong" 
+            sequence="10"
+            action="action_cham_cong"
+        />
+        <menuitem name="Bảng lương" 
+            id="menu_tinh_luong" 
+            parent="menu_hrm_cham_cong_luong" 
+            sequence="20"
+            action="action_tinh_luong"
+        />
+
+        <!-- NGHỈ PHÉP -->
+        <menuitem name="Đơn nghỉ phép" 
+            id="menu_phep_nam" 
+            parent="menu_hrm_nghi_phep" 
+            sequence="10"
+            action="action_phep_nam"
+        />
+
+        <!-- KHEN THƯỞNG - KỶ LUẬT -->
+        <menuitem name="Quyết định khen thưởng/kỷ luật" 
+            id="menu_khen_thuong_ky_luat" 
+            parent="menu_hrm_khen_thuong_ky_luat" 
+            sequence="10"
+            action="action_khen_thuong_ky_luat"
+        />
+
     </data>
 </odoo>

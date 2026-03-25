@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequence for Tai San -->
+        <record id="seq_tai_san" model="ir.sequence">
+            <field name="name">Mã tài sản</field>
+            <field name="code">tai.san.seq</field>
+            <field name="prefix">TS-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequence for Yeu Cau Mua Sam -->
+        <record id="seq_yeu_cau_mua_sam" model="ir.sequence">
+            <field name="name">Mã yêu cầu mua sắm</field>
+            <field name="code">yeu.cau.mua.sam.seq</field>
+            <field name="prefix">YCMS-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- New Sequences -->
+        <record id="seq_muon_tra" model="ir.sequence">
+            <field name="name">Mã phiếu mượn trả</field>
+            <field name="code">muon.tra.seq</field>
+            <field name="prefix">MT-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_bao_tri" model="ir.sequence">
+            <field name="name">Mã phiếu bảo trì</field>
+            <field name="code">bao.tri.seq</field>
+            <field name="prefix">BTTS-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_kiem_ke" model="ir.sequence">
+            <field name="name">Mã phiếu kiểm kê</field>
+            <field name="code">kiem.ke.seq</field>
+            <field name="prefix">KK-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_luan_chuyen" model="ir.sequence">
+            <field name="name">Mã phiếu luân chuyển</field>
+            <field name="code">luan.chuyen.seq</field>
+            <field name="prefix">LC-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_thanh_ly" model="ir.sequence">
+            <field name="name">Mã phiếu thanh lý</field>
+            <field name="code">thanh.ly.seq</field>
+            <field name="prefix">TL-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_don_muon" model="ir.sequence">
+            <field name="name">Mã đơn mượn</field>
+            <field name="code">don.muon.seq</field>
+            <field name="prefix">DM-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

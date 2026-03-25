@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_tam_ung_form" model="ir.ui.view">
+            <field name="name">tam_ung_nhan_vien.form</field>
+            <field name="model">tam_ung_nhan_vien</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_confirm" string="Xác nhận" type="object" class="btn-primary" attrs="{'invisible': [('trang_thai','!=','nhap')]}"/>
+                        <button name="action_approve" string="Duyệt" type="object" class="btn-success" attrs="{'invisible': [('trang_thai','!=','cho_duyet')]}"/>
+                        <button name="action_pay" string="Chi tiền" type="object" class="oe_highlight" attrs="{'invisible': [('trang_thai','!=','da_duyet')]}"/>
+                        <button name="action_done" string="Hoàn ứng" type="object" attrs="{'invisible': [('trang_thai','!=','da_chi')]}"/>
+                        <field name="trang_thai" widget="statusbar" statusbar_visible="nhap,cho_duyet,da_duyet,da_chi,da_hoan_ung"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="ma_tam_ung" readonly="1"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="nhan_vien_id"/>
+                                <field name="so_tien" widget="monetary" options="{'currency_field': False}"/>
+                            </group>
+                            <group>
+                                <field name="ngay_tam_ung"/>
+                                <field name="but_toan_id"/>
+                            </group>
+                        </group>
+                        <group string="Lý do &amp; Ghi chú">
+                            <field name="ly_do" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tam_ung_tree" model="ir.ui.view">
+            <field name="name">tam_ung_nhan_vien.tree</field>
+            <field name="model">tam_ung_nhan_vien</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="trang_thai == 'nhap'" decoration-muted="trang_thai == 'da_hoan_ung'">
+                    <field name="ma_tam_ung"/>
+                    <field name="nhan_vien_id"/>
+                    <field name="ngay_tam_ung"/>
+                    <field name="so_tien" sum="Tổng tiền"/>
+                    <field name="trang_thai" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_tam_ung" model="ir.actions.act_window">
+            <field name="name">Tạm ứng Nhân viên</field>
+            <field name="res_model">tam_ung_nhan_vien</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

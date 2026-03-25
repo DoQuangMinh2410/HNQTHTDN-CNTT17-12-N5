@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ROOT MENU -->
+        <menuitem
+            id="menu_finance_root"
+            name="Tài Chính Kế Toán"
+            web_icon="quan_ly_tai_chinh,static/description/icon.png"
+            sequence="15"/>
+          
+        <!-- THIẾT LẬP -->
+        <menuitem id="menu_finance_config" name="Cấu hình" parent="menu_finance_root" sequence="100"/>
+        <menuitem name="Hệ thống Tài khoản" 
+            id="menu_tai_khoan" 
+            parent="menu_finance_config" 
+            sequence="10"
+            action="action_tai_khoan"
+        />
+
+        <!-- NGHIỆP VỤ -->
+        <menuitem id="menu_finance_operations" name="Nghiệp vụ" parent="menu_finance_root" sequence="10"/>
+        <menuitem name="Sổ Nhật ký chung" 
+            id="menu_but_toan" 
+            parent="menu_finance_operations" 
+            sequence="10"
+            action="action_but_toan"
+        />
+
+        <!-- BÁO CÁO -->
+        <menuitem id="menu_finance_reports" name="Báo cáo" parent="menu_finance_root" sequence="20"/>
+        <menuitem name="Báo cáo Kết quả (P&amp;L)" 
+            id="menu_bao_cao_pl" 
+            parent="menu_finance_reports" 
+            sequence="10"
+            action="action_bao_cao_tai_chinh"
+        />
+    </data>
+</odoo>

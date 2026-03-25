@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_nhan_vien_form_inherit_tai_san" model="ir.ui.view">
+            <field name="name">nhan_vien.form.inherit.tai_san</field>
+            <field name="model">nhan_vien</field>
+            <field name="inherit_id" ref="nhan_su.view_nhan_vien_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Tài sản (Q.Lý Tài Sản)">
+                        <group string="Tài sản được cấp phát">
+                            <field name="tai_san_dang_giu_ids" readonly="1" nolabel="1">
+                                <tree>
+                                    <field name="tai_san_id"/>
+                                    <field name="ngay_phat" string="Ngày cấp phát"/>
+                                    <field name="trang_thai"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group string="Tài sản đang mượn">
+                            <field name="tai_san_dang_muon_ids" readonly="1" nolabel="1">
+                                <tree>
+                                    <field name="ma_don_muon"/>
+                                    <field name="ten_don_muon"/>
+                                    <field name="thoi_gian_muon"/>
+                                    <field name="thoi_gian_tra"/>
+                                    <field name="trang_thai"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

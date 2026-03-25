@@ -1,0 +1,115 @@
+/*
+    Premium UI Beautifier for Odoo HNDN
+    This CSS enhances the standard Odoo interface with modern aesthetics and animations.
+*/
+
+:root {
+    --primary-color: #6c5ce7;
+    --primary-hover: #5b4cc4;
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    --border-radius-lg: 12px;
+}
+
+/* 1. Page Animations */
+.o_content, .o_form_view, .o_list_view {
+    animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 2. Form View Enhancements */
+.o_form_view .o_form_sheet {
+    border-radius: var(--border-radius-lg) !important;
+    box-shadow: var(--card-shadow) !important;
+    border: 1px solid rgba(0,0,0,0.05) !important;
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease;
+}
+
+.o_form_view .o_form_statusbar {
+    background-color: transparent !important;
+    border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+    padding: 10px 20px !important;
+}
+
+/* 3. Button Styling */
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    border-radius: 8px !important;
+    padding: 6px 16px !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease-in-out !important;
+    box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3) !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(108, 92, 231, 0.4) !important;
+}
+
+/* 4. List View Enhancements */
+.o_list_view .table {
+    border-collapse: separate !important;
+    border-spacing: 0 8px !important;
+}
+
+.o_list_view tr.o_data_row {
+    background-color: #fff !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.o_list_view tr.o_data_row:hover {
+    background-color: #f8f9fa !important;
+    transform: scale(1.005);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
+    z-index: 10;
+}
+
+.o_list_view td {
+    border: none !important;
+    vertical-align: middle !important;
+}
+
+/* 5. Notebook / Tabs Styling */
+.nav-tabs {
+    border-bottom: 2px solid #f1f1f1 !important;
+}
+
+.nav-tabs .nav-link {
+    border: none !important;
+    color: #636e72 !important;
+    font-weight: 500 !important;
+    padding: 12px 20px !important;
+    transition: all 0.3s ease !important;
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--primary-color) !important;
+    background-color: transparent !important;
+    border-bottom: 3px solid var(--primary-color) !important;
+}
+
+/* 6. AI & Dashboard specifics */
+.o_dashboard_card {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.o_dashboard_card:hover {
+    transform: translateY(-10px) rotate(1deg);
+}

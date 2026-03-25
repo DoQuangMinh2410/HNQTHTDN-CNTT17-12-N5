@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ===== FORM VIEW ===== -->
+        <record id="view_khen_thuong_ky_luat_form" model="ir.ui.view">
+            <field name="name">khen_thuong_ky_luat.form</field>
+            <field name="model">khen_thuong_ky_luat</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="so_quyet_dinh" string="Số quyết định"/>
+                            <h1>
+                                <field name="loai" widget="badge"
+                                       decoration-success="loai == 'khen_thuong'"
+                                       decoration-danger="loai == 'ky_luat'"
+                                       readonly="1"/>
+                                <field name="so_quyet_dinh" placeholder="Nhập số quyết định..."/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Thông tin quyết định">
+                                <field name="nhan_vien_id"/>
+                                <field name="loai"/>
+                                <field name="hinh_thuc"/>
+                                <field name="ngay_quyet_dinh"/>
+                                <field name="nguoi_ky_quyet_dinh"/>
+                            </group>
+                            <group string="Giá trị / Tài liệu">
+                                <field name="gia_tri_thuong_phat" widget="monetary"
+                                       options="{'currency_field': False}"/>
+                                <field name="file_quyet_dinh" filename="file_quyet_dinh_name"/>
+                                <field name="file_quyet_dinh_name" invisible="1"/>
+                            </group>
+                        </group>
+                        <group string="Lý do / Mô tả">
+                            <field name="ly_do" nolabel="1" colspan="2"
+                                   placeholder="Mô tả chi tiết lý do khen thưởng hoặc kỷ luật..."/>
+                        </group>
+                        <group string="Ghi chú">
+                            <field name="ghi_chu" nolabel="1" colspan="2"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ===== TREE VIEW ===== -->
+        <record id="view_khen_thuong_ky_luat_tree" model="ir.ui.view">
+            <field name="name">khen_thuong_ky_luat.tree</field>
+            <field name="model">khen_thuong_ky_luat</field>
+            <field name="arch" type="xml">
+                <tree decoration-success="loai == 'khen_thuong'"
+                      decoration-danger="loai == 'ky_luat'">
+                    <field name="so_quyet_dinh"/>
+                    <field name="nhan_vien_id"/>
+                    <field name="loai" widget="badge"
+                           decoration-success="loai == 'khen_thuong'"
+                           decoration-danger="loai == 'ky_luat'"/>
+                    <field name="hinh_thuc"/>
+                    <field name="ngay_quyet_dinh"/>
+                    <field name="nguoi_ky_quyet_dinh"/>
+                    <field name="gia_tri_thuong_phat"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_khen_thuong_ky_luat_search" model="ir.ui.view">
+            <field name="name">khen_thuong_ky_luat.search</field>
+            <field name="model">khen_thuong_ky_luat</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm khen thưởng kỷ luật">
+                    <field name="nhan_vien_id"/>
+                    <field name="so_quyet_dinh"/>
+                    <separator/>
+                    <filter string="Khen thưởng" name="khen_thuong" domain="[('loai','=','khen_thuong')]"/>
+                    <filter string="Kỷ luật" name="ky_luat" domain="[('loai','=','ky_luat')]"/>
+                    <group expand="0" string="Nhóm theo">
+                        <filter string="Nhân viên" name="group_nv" context="{'group_by': 'nhan_vien_id'}"/>
+                        <filter string="Loại" name="group_loai" context="{'group_by': 'loai'}"/>
+                        <filter string="Hình thức" name="group_hinh_thuc" context="{'group_by': 'hinh_thuc'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_khen_thuong_ky_luat" model="ir.actions.act_window">
+            <field name="name">Khen thưởng - Kỷ luật</field>
+            <field name="res_model">khen_thuong_ky_luat</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_khen_thuong_ky_luat_search"/>
+        </record>
+    </data>
+</odoo>

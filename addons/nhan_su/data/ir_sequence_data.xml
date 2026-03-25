@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_nhan_vien" model="ir.sequence">
+            <field name="name">Mã định danh nhân viên</field>
+            <field name="code">nhan.vien.seq</field>
+            <field name="prefix">NV-</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_hop_dong" model="ir.sequence">
+            <field name="name">Mã hợp đồng lao động</field>
+            <field name="code">hop.dong.seq</field>
+            <field name="prefix">HD-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_phong_ban" model="ir.sequence">
+            <field name="name">Mã phòng ban</field>
+            <field name="code">phong.ban.seq</field>
+            <field name="prefix">PB-</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_chuc_vu" model="ir.sequence">
+            <field name="name">Mã chức vụ</field>
+            <field name="code">chuc.vu.seq</field>
+            <field name="prefix">CV-</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_tam_ung" model="ir.sequence">
+            <field name="name">Số phiếu tạm ứng</field>
+            <field name="code">tam.ung.seq</field>
+            <field name="prefix">TU-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

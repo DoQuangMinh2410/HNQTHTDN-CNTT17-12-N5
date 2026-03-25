@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_yeu_cau_mua_sam_form" model="ir.ui.view">
+            <field name="name">yeu_cau_mua_sam.form</field>
+            <field name="model">yeu_cau_mua_sam</field>
+            <field name="arch" type="xml">
+                <form string="Yêu cầu Mua sắm">
+                    <header>
+                        <button name="action_gui_duyet" string="Gửi trưởng phòng" type="object" class="btn-primary" attrs="{'invisible': [('trang_thai', '!=', 'nhap')]}"/>
+                        <button name="action_phe_duyet_va_mua" string="Duyệt &amp; Mua tài sản (Auto-run Event)" type="object" class="btn-success" attrs="{'invisible': [('trang_thai', '!=', 'cho_duyet')]}"/>
+                        <button name="action_tu_choi" string="Từ chối" type="object" class="btn-danger" attrs="{'invisible': [('trang_thai', '!=', 'cho_duyet')]}"/>
+                        <field name="trang_thai" widget="statusbar" statusbar_visible="nhap,cho_duyet,da_duyet"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="ma_yeu_cau" readonly="1" force_save="1"/></h1>
+                        </div>
+                        <group>
+                            <group string="Người yêu cầu">
+                                <field name="nguoi_yeu_cau_id" attrs="{'readonly': [('trang_thai','!=','nhap')]}"/>
+                                <field name="phong_ban_id"/>
+                                <field name="ngay_yeu_cau" attrs="{'readonly': [('trang_thai','!=','nhap')]}"/>
+                            </group>
+                            <group string="Thiết bị cần mua">
+                                <field name="ten_thiet_bi" attrs="{'readonly': [('trang_thai','!=','nhap')]}"/>
+                                <field name="danh_muc_ts_id" attrs="{'readonly': [('trang_thai','!=','nhap')]}"/>
+                                <field name="ly_do" attrs="{'readonly': [('trang_thai','!=','nhap')]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Dự toán">
+                                <field name="so_luong" attrs="{'readonly': [('trang_thai','!=','nhap')]}"/>
+                                <field name="don_gia_du_kien" widget="monetary" options="{'currency_field': False}" attrs="{'readonly': [('trang_thai','!=','nhap')]}"/>
+                                <field name="tong_tien" widget="monetary" options="{'currency_field': False}"/>
+                            </group>
+                            <group string="Hạch toán (Event-driven Automation)" attrs="{'invisible': [('trang_thai','in',['nhap','tu_choi'])]}">
+                                <field name="tai_khoan_ts_id" attrs="{'required': [('trang_thai','=','cho_duyet')]}"/>
+                                <field name="tai_khoan_chi_id" attrs="{'required': [('trang_thai','=','cho_duyet')]}"/>
+                            </group>
+                        </group>
+                        <notebook attrs="{'invisible': [('trang_thai','!=','da_duyet')]}">
+                            <page string="Tài sản đã tự động sinh ra">
+                                <field name="tai_san_sinh_ra_ids" readonly="1">
+                                    <tree>
+                                        <field name="ma_tai_san"/>
+                                        <field name="ten_tai_san"/>
+                                        <field name="gia_tri_ban_dau"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_yeu_cau_mua_sam_tree" model="ir.ui.view">
+            <field name="name">yeu_cau_mua_sam.tree</field>
+            <field name="model">yeu_cau_mua_sam</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="trang_thai == 'cho_duyet'" decoration-success="trang_thai == 'da_duyet'" decoration-muted="trang_thai == 'tu_choi'">
+                    <field name="ma_yeu_cau"/>
+                    <field name="nguoi_yeu_cau_id"/>
+                    <field name="ten_thiet_bi"/>
+                    <field name="so_luong"/>
+                    <field name="tong_tien" sum="Tổng tiền"/>
+                    <field name="trang_thai" widget="badge" 
+                           decoration-info="trang_thai == 'cho_duyet'"
+                           decoration-success="trang_thai == 'da_duyet'"
+                           decoration-danger="trang_thai == 'tu_choi'"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_yeu_cau_mua_sam" model="ir.actions.act_window">
+            <field name="name">Yêu cầu Mua sắm</field>
+            <field name="res_model">yeu_cau_mua_sam</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

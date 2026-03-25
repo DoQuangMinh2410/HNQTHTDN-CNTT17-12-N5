@@ -20,16 +20,28 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'quan_ly_tai_chinh', 'hndn_ai_base'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'data/ir_sequence_data.xml',
         'views/nhan_vien.xml',
+        'views/phong_ban.xml',
+        'views/chuc_vu.xml',
+        'views/lich_su_cong_tac.xml',
+        'views/hop_dong.xml',
+        'views/cham_cong.xml',
+        'views/tinh_luong.xml',
+        'views/phep_nam.xml',
+        'views/khen_thuong_ky_luat.xml',
+        'views/tam_ung.xml',
+        'views/res_config_settings_views.xml',
         'views/menu.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
     ],
+    'assets': {},
 }

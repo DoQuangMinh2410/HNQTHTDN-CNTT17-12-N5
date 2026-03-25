@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="q_trang_chu.Dashboard" owl="1">
+        <div class="o_hndn_dashboard">
+            <!-- Header -->
+            <div class="o_dashboard_title_section">
+                <h2><i class="fa fa-tachometer"/> Dashboard Tổng quan</h2>
+                <div class="o_dashboard_subtitle">Quản lý Tài sản &amp; Tài chính</div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="o_dashboard_cards">
+                <div class="o_dashboard_card card-blue" t-on-click="() => this.onAction('quan_ly_tai_san.tai_san_action')">
+                    <div class="o_card_icon"><i class="fa fa-cube"/></div>
+                    <div class="o_card_info">
+                        <div class="o_card_value"><t t-esc="state.stats.total_assets"/></div>
+                        <div class="o_card_label">Tổng tài sản</div>
+                    </div>
+                </div>
+                <div class="o_dashboard_card card-pink" t-on-click="() => this.onAction('quan_ly_tai_san.action_yeu_cau_mua_sam')">
+                    <div class="o_card_icon"><i class="fa fa-clock-o"/></div>
+                    <div class="o_card_info">
+                        <div class="o_card_value"><t t-esc="state.stats.pending_orders"/></div>
+                        <div class="o_card_label">Đơn chờ duyệt</div>
+                    </div>
+                </div>
+                <!-- ... other cards ... -->
+                <div class="o_dashboard_card card-cyan">
+                    <div class="o_card_icon"><i class="fa fa-exchange"/></div>
+                    <div class="o_card_info">
+                        <div class="o_card_value"><t t-esc="state.stats.borrowed_assets"/></div>
+                        <div class="o_card_label">Đang cho mượn</div>
+                    </div>
+                </div>
+                <div class="o_dashboard_card card-green" t-on-click="() => this.onAction('quan_ly_tai_chinh.action_but_toan')">
+                    <div class="o_card_icon"><i class="fa fa-money"/></div>
+                    <div class="o_card_info">
+                        <div class="o_card_value"><t t-esc="formatCurrency(state.stats.total_value)"/></div>
+                        <div class="o_card_label">Tổng giá trị</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="o_dashboard_section">
+                <div class="o_section_title"><i class="fa fa-bolt"/> Thao tác nhanh</div>
+                <div class="o_quick_actions">
+                    <div class="o_quick_btn btn-create-loan" t-on-click="() => this.onCreate('yeu_cau_mua_sam')">
+                        <i class="fa fa-plus-circle"/>
+                        <div>Tạo đơn mượn</div>
+                    </div>
+                    <div class="o_quick_btn btn-approve" t-on-click="() => this.onAction('nhan_su.action_tinh_luong')">
+                        <i class="fa fa-check-square-o"/>
+                        <div>Duyệt lương</div>
+                    </div>
+                    <div class="o_quick_btn btn-assets" t-on-click="() => this.onAction('quan_ly_tai_san.tai_san_action')">
+                        <i class="fa fa-cubes"/>
+                        <div>Tài sản</div>
+                    </div>
+                    <div class="o_quick_btn btn-inventory">
+                        <i class="fa fa-files-o"/>
+                        <div>Kiểm kê</div>
+                    </div>
+                    <div class="o_quick_btn btn-purchase" t-on-click="() => this.onAction('quan_ly_tai_san.action_yeu_cau_mua_sam')">
+                        <i class="fa fa-shopping-cart"/>
+                        <div>Phê duyệt mua</div>
+                    </div>
+                    <div class="o_quick_btn btn-refresh" t-att-class="{o_loading: state.loading}" t-on-click="fetchStats">
+                        <i class="fa fa-refresh"/>
+                        <div>Làm mới</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="o_dashboard_bottom_grid">
+                <!-- Notifications -->
+                <div class="o_dashboard_section">
+                    <div class="o_section_title" style="color: #e74c3c;"><i class="fa fa-bell"/> Thông báo quan trọng</div>
+                    <div t-if="state.stats.pending_orders > 0" class="o_dashboard_alert_item">
+                        <i class="fa fa-file-text-o"/>
+                        <span>Có <t t-esc="state.stats.pending_orders"/> đề xuất mua chờ phê duyệt</span>
+                    </div>
+                    <div t-else="" class="text-muted text-center py-4">Hôm nay không có thông báo mới.</div>
+                </div>
+
+                <!-- Activity -->
+                <div class="o_dashboard_section">
+                    <div class="o_section_title"><i class="fa fa-history"/> Hoạt động gần đây</div>
+                    <div class="o_no_activity">
+                        <i class="fa fa-archive fa-3x mb-3"/>
+                        <div>Chưa có hoạt động nào</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
